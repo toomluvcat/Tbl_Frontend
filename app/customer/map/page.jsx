@@ -4,50 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 import MobileNavbar from "@/components/mobilenavbar";
 import Link from "next/link";
 
-const mapStyle = [
-  {
-    "featureType": "administrative",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#005eb8"
-      }
-    ]
-  },
-  {
-    "featureType": "landscape",
-    "elementType": "all",
-    "stylers": [
-      {
-        "color": "#eef2f4"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#d1e9fe"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#ffffff"
-      }
-    ]
-  }
-];
+const mapStyle = [ { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [ { "color": "#005eb8" } ] }, { "featureType": "landscape", "elementType": "all", "stylers": [ { "color": "#eef2f4" } ] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [ { "color": "#d1e9fe" } ] }, { "featureType": "road.local", "elementType": "geometry.fill", "stylers": [ { "color": "#ffffff" } ] } ];
 
 export default function MapPage() {
   const mapRef = useRef(null);
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false); // เริ่มต้นแบบย่อ
 
-  // โหลด Google Map
   useEffect(() => {
     if (window.google && window.google.maps) {
       initMap();
@@ -61,12 +23,11 @@ export default function MapPage() {
     function initMap() {
       if (!mapRef.current) return;
       const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 16.476, lng: 102.802 }, // Khon Kaen University
+        center: { lat: 16.476, lng: 102.802 },
         zoom: 15,
         disableDefaultUI: true,
         styles: mapStyle,
       });
-      // เพิ่ม marker ตัวอย่าง
       new window.google.maps.Marker({
         position: { lat: 16.476, lng: 102.802 },
         map,
@@ -75,160 +36,112 @@ export default function MapPage() {
     }
   }, []);
 
-  // ความสูงของ bottom sheet
-  const expandedHeight = "min-h-[420px]"; // ปรับตามเนื้อหา
-  const collapsedHeight = "min-h-[150px] max-h-[150px]";
+  const expandedHeight = "min-h-[340px]";
+  const collapsedHeight = "min-h-[60px] max-h-[60px]";
 
   return (
     <div className="relative w-full min-h-screen bg-white font-prompt overflow-hidden">
       <MobileNavbar />
-      {/* Google Map: absolute เต็มจอ */}
+      {/* Google Map */}
       <div
         ref={mapRef}
         className="absolute inset-0 w-full h-full z-0"
         style={{ minHeight: "100vh" }}
       />
-
-      {/* Top Status Bar: fixed, z-20 */}
-      <div className="fixed top-10 left-1/2 -translate-x-1/2 z-20 w-[90vw] max-w-md">
+      {/* Top Status Bar */}
+      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-20 w-[92vw] max-w-sm">
         <div
-          className="flex items-center bg-white rounded-3xl shadow px-8"
-          style={{ paddingTop: 15, paddingBottom: 15 }}
+          className="flex items-center bg-white rounded-2xl shadow px-4 py-2"
         >
           <img
             src="/2-Map/truck 1.png"
             alt="truck"
-            className="w-8 h-8 rounded-full object-cover mr-2"
+            className="w-6 h-6 rounded-full object-cover mr-2"
           />
           <div className="flex-1 min-w-0">
-            <div className="font-normal text-[16px] truncate">หมายเลขทะเบียน กข 1234</div>
-            <div className="text-[10px] text-gray-500 truncate">จำหน่ายสินค้าบริเวณอำเภออุบลรัตน์</div>
+            <div className="font-normal text-[13px] truncate">หมายเลขทะเบียน กข 1234</div>
+            <div className="text-xs text-gray-500 truncate">จำหน่ายสินค้าบริเวณอำเภออุบลรัตน์</div>
           </div>
-          <div className="text-[#FF9000] font-medium text-[13px] whitespace-nowrap ml-2">
-            จะถึงภายใน 15 นาที
+          <div className="text-[#FF9000] font-medium text-xs whitespace-nowrap ml-1">
+            จะถึงใน 15 นาที
           </div>
         </div>
       </div>
-
-      {/* Bottom Sheet: fixed, z-30 */}
+      {/* Bottom Sheet: ปรับขนาดเล็กลง */}
       <div
-        className={`
-          fixed left-0 right-0 bottom-0 z-30
-          transition-all duration-500 ease-in-out
-          ${isExpanded ? expandedHeight : collapsedHeight}
-        `}
+        className={`fixed left-0 right-0 bottom-0 z-30 transition-all duration-500 ease-in-out 
+          ${isExpanded ? expandedHeight : collapsedHeight}`}
         style={{
-          borderTopLeftRadius: "1.5rem",
-          borderTopRightRadius: "1.5rem",
-          boxShadow: "0 0 24px 0 rgba(0,0,0,0.08)",
+          borderTopLeftRadius: "1rem",
+          borderTopRightRadius: "1rem",
+          boxShadow: "0 0 16px 0 rgba(0,0,0,0.07)",
           background: "#fff",
         }}
       >
         {/* Header (clickable area) */}
-        <div
-          className="cursor-pointer select-none"
-          
-        >
-           <div onClick={() => setIsExpanded((v) => !v)}>
-                        <div className="w-20 h-2 bg-gray-200 rounded-full mx-auto mt-2 mb-3" />
-                        <p className="text-center text-gray-300 text-sm mt-2 mb-2">กดที่นี่เพื่อแสดงแผนที่</p>
-                        <p className="ml-6 font-medium text-[18px]">รถที่กำลังปฏิบัติงาน</p>
-                    </div>
-          <div className="flex items-center gap-3 px-8 pb-2">
-            <img
-              src="/2-Map/Group 587.png"
-              alt="avatar"
-              className="w-12 h-12 rounded-full object-cover"
-            />
-            <div className="flex-1">
-              <div className="font-medium text-base">นางสาวส่ง ของไว</div>
-              <div className="text-xs text-gray-500">หมายเลขทะเบียน กข 123</div>
-            </div>
-            <a href="tel:027855555">
-              <Image src="/2-Map/Group 585.png" alt="สถานที่" width={40} height={40} />
-            </a>
-          </div>
+        <div className="cursor-pointer select-none" onClick={() => setIsExpanded((v) => !v)}>
+          <div className="w-12 h-1 bg-gray-200 rounded-full mx-auto mt-2 mb-1" />
+          <p className="text-center text-gray-300 text-xs mb-1">กดเพื่อแสดงหรือย่อข้อมูล</p>
+          <p className="ml-4 font-medium text-base mb-0.5 tracking-tight">รถที่ปฏิบัติงาน</p>
         </div>
-
-        {/* Content (show only when expanded) */}
+        {/* ข้อมูลคนขับ */}
+        <div className="flex items-center gap-2 px-4 pb-1">
+          <img
+            src="/2-Map/Group 587.png"
+            alt="avatar"
+            className="w-8 h-8 rounded-full object-cover"
+          />
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-sm truncate">นางสาวส่ง ของไว</div>
+            <div className="text-xs text-gray-400 truncate">ทะเบียน กข 123</div>
+          </div>
+          <a href="tel:027855555">
+            <Image src="/2-Map/Group 585.png" alt="สถานที่" width={28} height={28} />
+          </a>
+        </div>
+        {/* Content (เฉพาะตอนขยาย) */}
         <div
           className={`
             transition-all duration-500 ease-in-out overflow-hidden
-            ${isExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}
+            ${isExpanded ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"}
           `}
         >
-          <div className="px-8 pt-2 pb-4">
+          <div className="px-4 pt-1 pb-3">
             {/* Delivery Status */}
-            <div className="mt-4 flex flex-col flex-1 justify-between" style={{ minHeight: "260px" }}>
+            <div className="flex flex-col pt-2 gap-y-6" style={{ minHeight: "140px" }}>
               <div>
-                <div className="font-normal text-[18px] mb-2">Delivery Status</div>
-                <div className="flex flex-col gap-y-10 relative">
-                  {/* Vertical line */}
-                  <div
-                    className="absolute left-4 top-4 bottom-4 w-0.5 bg-blue-200 z-0"
-                    style={{ height: "calc(100% - 32px)" }}
-                  />
-                  {/* Step 1 */}
-                  <div className="flex items-start gap-3 relative z-10">
-                    <div className="flex flex-col items-center min-w-[32px]">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center">
-                        <div className="font-normal text-black text-[16px]">พัสดุออกจากศูนย์ขอนแก่น</div>
-                        <div className="ml-auto text-gray-400 text-sm font-normal">05.24 น.</div>
+                <div className="font-normal text-base mb-1">สถานะการส่ง</div>
+                <div className="flex flex-col gap-y-5 relative">
+                  <div className="absolute left-3 top-4 bottom-4 w-0.5 bg-blue-100 z-0" style={{ height: "calc(100% - 24px)" }} />
+                  {/* Step */}
+                  {[
+                    { label: "พัสดุออกจากศูนย์ขอนแก่น", sub: "บรรจุสินค้า", time: "05.24 น.", done: true },
+                    { label: "ร้านขายสินค้าประเวณอำเภอเมือง", sub: "ร้านขายสินค้า", time: "10.34 น.", done: true },
+                    { label: "ร้านขายสินค้าประเวณอำเภออุบลรัตน์", sub: "ร้านขายสินค้า", time: "ตำแหน่งปัจจุบัน", done: true },
+                    { label: "ร้านค้าของคุณ", sub: "ร้านขายสินค้า", time: "คาดว่า 18.30 น.", done: false },
+                  ].map((step, i) => (
+                    <div key={i} className={`flex items-start gap-2 relative z-10 ${i > 0 && "mt-0.5"}`}>
+                      <div className="flex flex-col items-center min-w-[24px]">
+                        <div className={`w-3 h-3 ${step.done ? "bg-blue-500" : "bg-gray-300"} rounded-full border-2 border-white shadow`} />
                       </div>
-                      <div className="text-xs text-gray-400 mt-1 font-normal">บรรจุสินค้า</div>
-                    </div>
-                  </div>
-                  {/* Step 2 */}
-                  <div className="flex items-start gap-3 relative z-10 mt-2">
-                    <div className="flex flex-col items-center min-w-[32px]">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center">
-                        <div className="font-normal text-black text-[16px]">ร้านขายสินค้าประเวณอำเภอเมือง</div>
-                        <div className="ml-auto text-gray-400 text-sm font-normal">10.34 น.</div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-1">
+                          <div className={`font-normal text-[13px] ${!step.done ? "text-gray-400" : "text-black"}`}>{step.label}</div>
+                          <div className={`ml-auto text-xs font-normal ${!step.done ? "text-gray-400" : "text-gray-400"}`}>{step.time}</div>
+                        </div>
+                        <div className="text-xs text-gray-400">{step.sub}</div>
                       </div>
-                      <div className="text-xs text-gray-400 mt-1 font-normal">ร้านขายสินค้า</div>
                     </div>
-                  </div>
-                  {/* Step 3 */}
-                  <div className="flex items-start gap-3 relative z-10 mt-2">
-                    <div className="flex flex-col items-center min-w-[32px]">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center">
-                        <div className="font-normal text-black text-[16px]">ร้านขายสินค้าประเวณอำเภออุบลรัตน์</div>
-                        <div className="ml-auto text-sm font-normal">ตำแหน่งปัจจุบัน</div>
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1 font-normal">ร้านขายสินค้า</div>
-                    </div>
-                  </div>
-                  {/* Step 4 */}
-                  <div className="flex items-start gap-3 relative z-10 mt-2">
-                    <div className="flex flex-col items-center min-w-[32px]">
-                      <div className="w-4 h-4 bg-gray-300 rounded-full border-4 border-white shadow" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center">
-                        <div className="font-normal text-gray-400 text-[16px]">ร้านค้าของคุณ</div>
-                        <div className="ml-auto text-gray-400 text-sm font-normal">คาดว่าจะถึง 18.30 น.</div>
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1 font-normal">ร้านขายสินค้า</div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
               {/* Spacer for bottom button */}
-              <div className="h-6" />
+              <div className="h-1" />
             </div>
             {/* ปุ่ม */}
             <Link href="/customer/order">
-              <button  className="w-full mt-6 rounded-[30px] bg-[#0066B1] text-white  py-3 font-semibold text-lg" type="button">
-              รายการสั่งซื้อ
+              <button className="w-full mt-3 rounded-xl bg-[#0066B1] text-white py-2 font-medium text-base" type="button">
+                รายการสั่งซื้อ
               </button>
             </Link>
           </div>

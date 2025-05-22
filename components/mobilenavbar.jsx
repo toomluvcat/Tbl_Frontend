@@ -8,87 +8,77 @@ export default function MobileNavbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // เพิ่ม useEffect เพื่อ log pathname เมื่อเปลี่ยน
-  useEffect(() => {
-    console.log("Pathname changed:", pathname);
-  }, [pathname]);
-
-  // เมนูสำหรับลูกค้า
   const customerNavs = [
     { name: "หน้าหลัก", href: "/customer/home" },
     { name: "แผนที่", href: "/customer/map" },
     { name: "คำสั่งซื้อ", href: "/customer/order" },
     { name: "รายงาน", href: "/statement" },
-    {name:"ประวัติการสั่งซื้อ",href:"/customer/history"}
+    { name: "ประวัติการสั่งซื้อ", href: "/customer/history" }
   ];
-
-  // เมนูสำหรับคนขับ
   const driverNavs = [
     { name: "หน้าหลัก", href: "/driver/home" },
     { name: "จัดการรถ", href: "/driver/map" },
     { name: "เส้นทาง", href: "/driver/route" },
   ];
 
-  // ฟังก์ชันเช็คว่า path ปัจจุบันตรงกับ nav item หรือไม่
-  const isActive = (href) => {
-    return pathname === href || pathname.startsWith(href);
-  };
+  const isActive = (href) => pathname === href || pathname.startsWith(href);
 
   return (
     <>
-      {/* Hamburger Button */}
+      {/* Hamburger Button (เล็กเรียบ) */}
       <button
-        className="fixed top-6 left-4 z-40 bg-white rounded-full p-2.5 shadow-sm"
+        className="fixed top-5 left-3 z-40 bg-white border border-gray-200 rounded px-3 py-2 shadow-none active:scale-95 transition"
         onClick={() => setOpen(true)}
         aria-label="Open menu"
       >
-        <IoMenu size={22} className="text-gray-800" />
+        <IoMenu size={20} className="text-gray-600" />
       </button>
 
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 transition-opacity"
+          className="fixed inset-0 bg-black/10 z-50"
           onClick={() => setOpen(false)}
         />
       )}
 
       {/* Slide Drawer */}
-      <div
+      <aside
         className={`
-          fixed top-0 left-0 h-full w-64 bg-white z-50 shadow-md
-          transform transition-transform duration-200 ease-in-out
+          fixed top-0 left-0 h-full w-60 bg-white z-50
+          transition-transform duration-200
           ${open ? "translate-x-0" : "-translate-x-full"}
+          border-r border-gray-100
         `}
       >
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="p-5 flex justify-between items-center border-b">
-            <h2 className="font-medium text-gray-800">เมนู</h2>
+          {/* Header (เรียบ ๆ) */}
+          <div className="flex items-center justify-between px-4 py-4 border-b border-gray-100">
+            <span className="text-base font-normal text-gray-700 tracking-tight">เมนู</span>
             <button
               onClick={() => setOpen(false)}
               aria-label="Close menu"
-              className="p-1"
+              className="p-1 rounded hover:bg-gray-100 transition"
             >
-              <IoClose size={22} className="text-gray-600" />
+              <IoClose size={20} className="text-gray-500" />
             </button>
           </div>
           
           {/* Navigation */}
-          <nav className="flex-1 pt-2">
-            {/* เมนูลูกค้า */}
-            <div className="px-4 py-2">
-              <h3 className="text-sm font-medium text-gray-500 mb-2">ลูกค้า</h3>
-              <ul className="space-y-1">
+          <nav className="flex-1 overflow-y-auto py-3">
+            {/* หมวดลูกค้า */}
+            <div className="px-5">
+              <h3 className="text-xs font-semibold text-gray-400 mb-1">ลูกค้า</h3>
+              <ul>
                 {customerNavs.map((nav) => (
                   <li key={nav.href}>
                     <Link
                       href={nav.href}
-                      className={`block px-4 py-3 rounded-lg transition-colors ${
-                        isActive(nav.href)
-                          ? "bg-blue-50 text-blue-600 font-medium"
-                          : "text-gray-600 hover:bg-gray-50"
-                      }`}
+                      className={`block px-2 py-2 rounded transition-colors
+                        ${isActive(nav.href)
+                          ? "bg-gray-100 text-blue-600 font-medium"
+                          : "text-gray-700 hover:bg-gray-50"
+                        }`}
                       onClick={() => setOpen(false)}
                     >
                       {nav.name}
@@ -98,19 +88,19 @@ export default function MobileNavbar() {
               </ul>
             </div>
 
-            {/* เมนูคนขับ */}
-            <div className="px-4 py-2 border-t">
-              <h3 className="text-sm font-medium text-gray-500 mb-2">คนขับ</h3>
-              <ul className="space-y-1">
+            {/* หมวดคนขับ */}
+            <div className="px-5 mt-6">
+              <h3 className="text-xs font-semibold text-gray-400 mb-1">คนขับ</h3>
+              <ul>
                 {driverNavs.map((nav) => (
                   <li key={nav.href}>
                     <Link
                       href={nav.href}
-                      className={`block px-4 py-3 rounded-lg transition-colors ${
-                        isActive(nav.href)
-                          ? "bg-blue-50 text-blue-600 font-medium"
-                          : "text-gray-600 hover:bg-gray-50"
-                      }`}
+                      className={`block px-2 py-2 rounded transition-colors
+                        ${isActive(nav.href)
+                          ? "bg-gray-100 text-blue-600 font-medium"
+                          : "text-gray-700 hover:bg-gray-50"
+                        }`}
                       onClick={() => setOpen(false)}
                     >
                       {nav.name}
@@ -121,7 +111,7 @@ export default function MobileNavbar() {
             </div>
           </nav>
         </div>
-      </div>
+      </aside>
     </>
   );
 }
