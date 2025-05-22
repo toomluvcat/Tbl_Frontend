@@ -14,16 +14,12 @@ export default function Home() {
 
   const onScanSuccess = (decodedText) => {
     setShowQRScanner(false);
-    const orderId = decodedText.trim();
-    if (orderId.startsWith('http://') || orderId.startsWith('https://')) {
-      window.location.href = orderId;
-    } else if (orderId) {
-      router.push(`/customer/order/${orderId}`);
-    }
+    router.push('/customer/order');
   };
 
   const onScanFailure = (error) => {
-    console.warn(`QR Code scan failed: ${error}`);
+    setShowQRScanner(false);
+    router.push('/customer/order');
   };
 
   useEffect(() => {
