@@ -1,9 +1,12 @@
 import Image from "next/image";
+import MobileNavbar from "@/components/mobilenavbar";
+import Link from "next/link";
 
 export default function HomePage() {
     return (
         <div className="min-h-screen font-prompt flex flex-col items-center">
             {/* Header */}
+            <MobileNavbar></MobileNavbar>
             <header className="w-full max-w-[420px] mx-auto flex items-center justify-between px-5 pt-4 pb-2 bg-white rounded-b-2xl shadow-none">
                 <div className="flex items-center mt-4 gap-3">
                     <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
@@ -32,25 +35,20 @@ export default function HomePage() {
                 <p className="text-md font-medium text-[#222] mb-2">เครื่องมือ</p>
                 <div className="flex justify-between">
                     {/* Tool 1 */}
-                    <div className="flex flex-col items-center">
+                    <Link href="/driver/route" className="flex flex-col items-center">
                         <Image src="/11-Driver/Group 572.png" alt="profile" width={200} quality={100} height={200} className="w-14 h-14 object-cover" />
                         <div className="text-xs text-[#222] font-medium mt-2">ภาระงาน</div>
-                    </div>
+                    </Link>
                     {/* Tool 2 */}
-                    <div className="flex flex-col items-center">
+                    <Link href="/driver/manage" className="flex flex-col items-center">
                         <Image src="/11-Driver/Group 571.png" alt="profile" width={200} quality={100} height={200} className="w-14 h-14 object-cover" />
-                        <div className="text-xs text-[#222] font-medium mt-2">ข้อมูลย้อนหลัง</div>
-                    </div>
+                        <div className="text-xs text-[#222] font-medium mt-2">ข้อมูลเชิงลึก</div>
+                    </Link>
                     {/* Tool 3 */}
-                    <div className="flex flex-col items-center">
+                    <a href="/statement" className="flex flex-col items-center">
                         <Image src="/11-Driver/Group 573.png" alt="profile" width={200} quality={100} height={200} className="w-14 h-14 object-cover" />
                         <div className="text-xs text-[#222] font-medium mt-2">เสตทเม้นต์</div>
-                    </div>
-                    {/* Tool 4 */}
-                    <div className="flex flex-col items-center">
-                        <Image src="/11-Driver/ChatGPT_Image_May_21__2025__06_19_35_PM-removebg-preview 1.png" alt="profile" width={200} quality={100} height={200} className="w-24" />
-                        <div className="text-xs text-[#222] font-medium mt-2">เกี่ยวกับเรา</div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div className="w-full max-w-[420px] mx-auto mt-7 px-5">
@@ -67,7 +65,9 @@ export default function HomePage() {
                             รถหมายเลข กข 123
                         </div>
                         <div className="flex">
-                            <button className="bg-[#222] text-white text-[11px] rounded-full px-6 py-2">ตรวจสอบ</button>
+                            <Link href="/driver/route">
+                                <button className="bg-[#222] text-white text-[11px] rounded-full px-6 py-2">ตรวจสอบ</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -136,15 +136,14 @@ export default function HomePage() {
                 </div>
             </div>
 
-            {/* Order Status */}
-            
-
             {/* Progress Bar */}
             <div className="w-full max-w-[420px] mx-auto mt-6 px-5">
                 <div className="bg-white rounded-2xl p-4 flex flex-col shadow border border-[#F0F0F0]">
                     <p className="text-[12px] font-medium mb-4">สถานะการส่งของคุณ</p>
                     <Image src="/11-Driver/Group 604.png" alt="profile" width={500} quality={100} height={500} className="w-full" />
-                    <button className="w-full bg-[#0070C0] text-white text-sm font-semibold rounded-full py-2 mt-4">รายละเอียดเส้นทาง</button>
+                    <Link href="/driver/route">
+                        <button className="w-full bg-[#0070C0] text-white text-sm font-semibold rounded-full py-2 mt-4">รายละเอียดเส้นทาง</button>
+                    </Link>
                 </div>
             </div>
             <div className="h-10"></div>

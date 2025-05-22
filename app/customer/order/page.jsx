@@ -1,4 +1,5 @@
 'use client';
+import Link from "next/link";
 import MobileNavbar from "@/components/mobilenavbar";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -141,12 +142,15 @@ export default function OrderDetail() {
                   ))}
                 </div>
                 {/* ปุ่ม */}
+               
                 <button
                   className="w-full bg-[#0070C0] hover:bg-[#005fa3] text-white text-[16px] font-medium rounded-full py-3  shadow transition"
                   onClick={() => setShowRating(false)}
-                >
+                > <a href="/statement">
                   ยืนยันการให้คะแนน
+                  </a>
                 </button>
+              
               </div>
             </div>
           </div>

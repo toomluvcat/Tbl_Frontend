@@ -3,14 +3,15 @@
 import { useState } from "react";
 import { ChevronLeft } from 'lucide-react';
 import Image from 'next/image';
-
+import MobileNavbar from "@/components/mobilenavbar";
+import Link from "next/link";
 const timeline = [
   {
     title: "ขึ้นของที่คลัง",
     time: "9.00 น.",
     desc: (
       <>
-      วางเบียร์ 10 ลังข้างตู้แช่, โซดาหลังเคาน์เตอร์, น้ำดื่มชิดประตู เจ้าของตรวจนับก่อน รับสินค้าแล้วถอยรถ
+      วางเบียร์ 10 ลังข้างตู้แช่,เจ้าของตรวจนับก่อน รับสินค้าแล้วถอยรถ
       </>
     ),
     button: true,
@@ -20,14 +21,14 @@ const timeline = [
     time: "9.30 น.",
     desc: (
       <>
-       ขนเบียร์เข้าหลังร้านมุมซ้าย, โซดาติดผนังขวา, น้ำดื่มซ้อนข้างชั้น ระวังบันไดชันและพื้นลื่นเมื่อฝนตก
+       ขนเบียร์เข้าหลังร้านมุมซ้าย, น้ำดื่มซ้อนข้างชั้น ระวังบันไดชันและพื้นลื่นเมื่อฝนตก
       </>
     ),
     button: true,
   },
   
   {
-    title: "ส่งของ ร้านมีชัย โภคภัณฑ์",
+    title: "ส่งของ มีชัย โภคภัณฑ์",
     time: "10.35 น.",
     desc: (
       <>
@@ -37,8 +38,8 @@ const timeline = [
     button: true,
   },
   {
-    title: "ส่งของ ร้านซื้อกะตา",
-    time: "10.35 น.",
+    title: "ส่งของ ซื้อกะตา",
+    time: "12.00 น.",
     desc: (
       <>
        ลากเบียร์ใต้ชั้นแช่, โซดาวางพาเลท, น้ำดื่มมุมหน้าร้าน พื้นลื่น ใช้รองเท้ากันลื่น
@@ -56,14 +57,15 @@ export default function ThaiScheduleApp() {
   return (
     <div className="min-h-screen  font-prompt">
       {/* Header */}
+      <MobileNavbar></MobileNavbar>
       <div className="bg-white px-4 py-3 flex items-center ">
         <ChevronLeft className="w-6 h-6 text-gray-600 mr-3" />
-        <h1 className="text-lg font-medium text-gray-900">รายการที่ต้องทำ</h1>
+        <h1 className="text-lg mt-4 ml-4 font-medium text-gray-900">รายการที่ต้องทำ</h1>
       </div>
 
       {/* Calendar Section */}
-      <div className="bg-white mx-4 mt-4 rounded-lg p-4">
-        <h2 className="text-xl font-medium text-gray-900 mb-4">จันทร์ 10 พค</h2>
+      <div className="bg-white mx-4  rounded-lg p-4">
+        <h2 className="text-xl font-medium text-gray-900 mb-4">เสาร์ 13 พค.</h2>
         
         {/* Week Days */}
         <div className="grid grid-cols-7 gap-1 mb-2">
@@ -123,22 +125,24 @@ export default function ThaiScheduleApp() {
                   }
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-lg font-medium">{item.title}</h3>
+                    <h3 className="text-[14px] font-medium">{item.title}</h3>
                     <span className={idx === 0 ? "text-sm text-white" : "text-sm text-gray-600"}>{item.time}</span>
                   </div>
                   <div className="flex justify-between items-end">
-                    <p className={idx === 0 ? "text-sm mb-3 max-w-[200px] opacity-90" : "text-sm mb-3 max-w-[200px] text-gray-600"}>
+                    <p className={idx === 0 ? "text-[12px] mb-3 max-w-[150px] opacity-90" : "text-[12px] mb-3 max-w-[150px] text-gray-600"}>
                       {item.desc}
                     </p>
                     {item.button && (
                       <button
-                        className={`${idx === 0 ? "bg-black  text-white" : "bg-white text-black border border-gray-200" }  px-4 py-2 rounded-full text-sm font-medium ml-4 transition-all duration-300`}
+                        className={`${idx === 0 ? "bg-black  text-white" : "bg-white text-black border border-gray-200" }  px-4 py-2 rounded-full text-[10px] font-medium ml-4 transition-all duration-300`}
                         onClick={e => {
                           e.stopPropagation();
                           setShowDetail(idx === showDetail ? null : idx);
                         }}
                       >
+                        <Link href="/customer/order">
                         ตรวจสอบ
+                        </Link>
                       </button>
                     )}
                   </div>

@@ -13,20 +13,25 @@ export default function MobileNavbar() {
     console.log("Pathname changed:", pathname);
   }, [pathname]);
 
-  const navs = [
-    { name: "Home", href: "/customer/home" },
-    { name: "Map", href: "/customer/map" },
-    { name: "Order", href: "/customer/order" },
+  // เมนูสำหรับลูกค้า
+  const customerNavs = [
+    { name: "หน้าหลัก", href: "/customer/home" },
+    { name: "แผนที่", href: "/customer/map" },
+    { name: "คำสั่งซื้อ", href: "/customer/order" },
+    { name: "รายงาน", href: "/statement" },
+    {name:"ประวัติการสั่งซื้อ",href:"/customer/history"}
+  ];
+
+  // เมนูสำหรับคนขับ
+  const driverNavs = [
+    { name: "หน้าหลัก", href: "/driver/home" },
+    { name: "จัดการรถ", href: "/driver/map" },
+    { name: "เส้นทาง", href: "/driver/route" },
   ];
 
   // ฟังก์ชันเช็คว่า path ปัจจุบันตรงกับ nav item หรือไม่
   const isActive = (href) => {
-    // ถ้าเป็นหน้า order ให้เช็คแค่ /customer/order
-    if (href === "/customer/order") {
-      return pathname === "/customer/order";
-    }
-    // หน้าอื่นๆ ให้เช็คด้วย startsWith
-    return pathname.startsWith(href);
+    return pathname === href || pathname.startsWith(href);
   };
 
   return (
@@ -58,7 +63,8 @@ export default function MobileNavbar() {
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="p-5 flex justify-end">
+          <div className="p-5 flex justify-between items-center border-b">
+            <h2 className="font-medium text-gray-800">เมนู</h2>
             <button
               onClick={() => setOpen(false)}
               aria-label="Close menu"
@@ -70,23 +76,49 @@ export default function MobileNavbar() {
           
           {/* Navigation */}
           <nav className="flex-1 pt-2">
-            <ul className="space-y-1 px-3">
-              {navs.map((nav) => (
-                <li key={nav.href}>
-                  <Link
-                    href={nav.href}
-                    className={`block px-4 py-3 rounded-lg transition-colors ${
-                      isActive(nav.href)
-                        ? "bg-gray-100 text-gray-900 font-medium"
-                        : "text-gray-600 hover:bg-gray-50"
-                    }`}
-                    onClick={() => setOpen(false)}
-                  >
-                    {nav.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {/* เมนูลูกค้า */}
+            <div className="px-4 py-2">
+              <h3 className="text-sm font-medium text-gray-500 mb-2">ลูกค้า</h3>
+              <ul className="space-y-1">
+                {customerNavs.map((nav) => (
+                  <li key={nav.href}>
+                    <Link
+                      href={nav.href}
+                      className={`block px-4 py-3 rounded-lg transition-colors ${
+                        isActive(nav.href)
+                          ? "bg-blue-50 text-blue-600 font-medium"
+                          : "text-gray-600 hover:bg-gray-50"
+                      }`}
+                      onClick={() => setOpen(false)}
+                    >
+                      {nav.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* เมนูคนขับ */}
+            <div className="px-4 py-2 border-t">
+              <h3 className="text-sm font-medium text-gray-500 mb-2">คนขับ</h3>
+              <ul className="space-y-1">
+                {driverNavs.map((nav) => (
+                  <li key={nav.href}>
+                    <Link
+                      href={nav.href}
+                      className={`block px-4 py-3 rounded-lg transition-colors ${
+                        isActive(nav.href)
+                          ? "bg-blue-50 text-blue-600 font-medium"
+                          : "text-gray-600 hover:bg-gray-50"
+                      }`}
+                      onClick={() => setOpen(false)}
+                    >
+                      {nav.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </nav>
         </div>
       </div>

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import MobileNavbar from "@/components/mobilenavbar";
+import Link from "next/link";
 
 const mapStyle = [
   {
@@ -126,10 +127,13 @@ export default function MapPage() {
         {/* Header (clickable area) */}
         <div
           className="cursor-pointer select-none"
-          onClick={() => setIsExpanded((v) => !v)}
+          
         >
-          <div className="w-20 h-2 bg-gray-200 rounded-full mx-auto mt-2 mb-3" />
-          <p className="text-center text-gray-300 text-sm mt-2 mb-2">กดที่นี่เพื่อแสดงแผนที่</p>
+           <div onClick={() => setIsExpanded((v) => !v)}>
+                        <div className="w-20 h-2 bg-gray-200 rounded-full mx-auto mt-2 mb-3" />
+                        <p className="text-center text-gray-300 text-sm mt-2 mb-2">กดที่นี่เพื่อแสดงแผนที่</p>
+                        <p className="ml-6 font-medium text-[18px]">รถที่กำลังปฏิบัติงาน</p>
+                    </div>
           <div className="flex items-center gap-3 px-8 pb-2">
             <img
               src="/2-Map/Group 587.png"
@@ -198,7 +202,7 @@ export default function MapPage() {
                     <div className="flex-1">
                       <div className="flex items-center">
                         <div className="font-normal text-black text-[16px]">ร้านขายสินค้าประเวณอำเภออุบลรัตน์</div>
-                        <div className="ml-auto text-sm font-normal">กำลังดำเนินการ</div>
+                        <div className="ml-auto text-sm font-normal">ตำแหน่งปัจจุบัน</div>
                       </div>
                       <div className="text-xs text-gray-400 mt-1 font-normal">ร้านขายสินค้า</div>
                     </div>
@@ -222,9 +226,11 @@ export default function MapPage() {
               <div className="h-6" />
             </div>
             {/* ปุ่ม */}
-            <button className="w-full mt-6 rounded-[30px] bg-[#0066B1] text-white  py-3 font-semibold text-lg">
+            <Link href="/customer/order">
+              <button  className="w-full mt-6 rounded-[30px] bg-[#0066B1] text-white  py-3 font-semibold text-lg" type="button">
               รายการสั่งซื้อ
-            </button>
+              </button>
+            </Link>
           </div>
         </div>
       </div>

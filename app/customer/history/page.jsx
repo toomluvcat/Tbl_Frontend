@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useRouter } from 'next/navigation';
+import MobileNavbar from '@/components/mobilenavbar';
+import Link from 'next/link';
 
 export default function OrderHistoryPage() {
   const router = useRouter();
@@ -127,8 +129,8 @@ export default function OrderHistoryPage() {
         <div className="max-w-md mx-auto bg-white min-h-screen">
           {/* Header */}
           <header className="flex justify-center items-center py-4 px-6">
-           
-            <h1 className="text-xl ">รายการย้อนหลัง</h1>
+           <MobileNavbar></MobileNavbar>
+            <h1 className="text-xl mt-4">รายการย้อนหลัง</h1>
             
           </header>
 
@@ -263,7 +265,11 @@ function OrderItem({ orderId, status, actionLabel, actionClass }) {
           <p className="text-sm text-gray-500">{status}</p>
         </div>
       </div>
-      <button className={`rounded-full px-4 py-2 text-sm ${actionClass}`}>{actionLabel}</button>
+      <button className={`rounded-full px-4 py-2 text-sm ${actionClass}`}>
+        <Link href="/customer/order">
+          {actionLabel}
+        </Link>
+      </button>
     </div>
   );
 }
