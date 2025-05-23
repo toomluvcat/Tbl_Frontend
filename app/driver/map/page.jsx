@@ -274,7 +274,7 @@ export default function MapPage() {
                 <div className="cursor-pointer select-none p-4">
                     <div onClick={() => setIsExpanded((v) => !v)}>
                         <div className="w-20 h-2 bg-gray-200 rounded-full mx-auto mt-2 mb-3" />
-                        <p className="text-center text-gray-300 text-sm mt-2 mb-2">กดที่นี่เพื่อแสดงแผนที่</p>
+                        <p className="text-center text-gray-300 text-sm mt-2 mb-2">กดที่นี่เพื่อซ่อนหรือแสดงแผนที่</p>
                         <p className="ml-6 font-medium text-[18px]">รถที่กำลังปฏิบัติงาน</p>
                     </div>
                     <div className="space-y-2">
